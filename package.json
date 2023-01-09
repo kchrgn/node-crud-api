@@ -1,0 +1,23 @@
+{
+  "name": "crud-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kchrgn/node-crud-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kchrgn/node-crud-api/issues"
+  },
+  "homepage": "https://github.com/kchrgn/node-crud-api#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
