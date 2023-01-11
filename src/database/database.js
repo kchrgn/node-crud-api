@@ -1,24 +1,24 @@
-export default class Database {
+class Database {
   constructor () {
     this._records = [
-      // {
-      //   id: '1',
-      //   username: 'Вася',
-      //   age: '46',
-      //   hobbies: [
-      //     'sport',
-      //     'books',
-      //   ],
-      // },
-      // {
-      //   id: '2',
-      //   username: 'Петя',
-      //   age: '23',
-      //   hobbies: [
-      //     'sport',
-      //     'books',
-      //   ],
-      // },
+      {
+        id: '1',
+        username: 'Вася',
+        age: '46',
+        hobbies: [
+          'sport',
+          'books',
+        ],
+      },
+      {
+        id: '2',
+        username: 'Петя',
+        age: '23',
+        hobbies: [
+          'sport',
+          'books',
+        ],
+      },
     ]
   }
 
@@ -53,3 +53,5 @@ export default class Database {
     return (indexOfUser === -1) ? undefined : indexOfUser;
   }
 }
+
+export const database = new Database()
