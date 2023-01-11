@@ -16,3 +16,4 @@
 
 - Use POSTMAN app for requests and check app responses in accordance https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/crud-api/assignment.md endpoints
 - Use port 4000 on localhost for requests
+- App implemented so that you don't need use symbol $ in endpoints before {userId}

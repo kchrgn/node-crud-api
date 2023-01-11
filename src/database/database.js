@@ -1,8 +1,10 @@
+import { v5 as uuidv5 } from 'uuid';
+
 class Database {
   constructor () {
     this._records = [
       {
-        id: '1',
+        id: 'c106a26a-21bb-5538-8bf2-57095d1976c1',
         username: 'Вася',
         age: '46',
         hobbies: [
@@ -11,7 +13,7 @@ class Database {
         ],
       },
       {
-        id: '2',
+        id: 'c106a26a-21bb-5538-8bf2-57095d1976c2',
         username: 'Петя',
         age: '23',
         hobbies: [
@@ -31,7 +33,8 @@ class Database {
   }
   
   createUser(user) {
-    this._records.push(user);
+    const uuid = uuidv5('', uuidv5.URL);
+    this._records.push({ id: uuid, ...user });
     return this._records[this._records.length - 1];
   }
 
