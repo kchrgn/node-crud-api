@@ -41,9 +41,9 @@ class Database {
   updateUser(id, data) {
     let user = this._records.find((record) => record.id === id );
     if (user) {
-      user.username = data.username;
-      user.age = data.age;
-      user.hobbies = [...data.hobbies];
+      if (data.username) user.username = data.username;
+      if (data.age) user.age = data.age;
+      if (data.hobbies) user.hobbies = [...data.hobbies];
     };
     return user;
   }

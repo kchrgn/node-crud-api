@@ -4,6 +4,7 @@ import { router } from "./router.js";
 
 // TODO - delete mock data from database
 // TODO - need check data for update and create records in DB 
+// TODO - describe incorrect processing json in request
 
 export default class App {
   start() {

@@ -17,3 +17,4 @@
 - Use POSTMAN app for requests and check app responses in accordance https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/crud-api/assignment.md endpoints
 - Use port 4000 on localhost for requests
 - App implemented so that you don't need use symbol $ in endpoints before {userId}
+- PUT - request should content one ore more required fields and hobbies (if exist) should be array in other case error 400 will be emitted
