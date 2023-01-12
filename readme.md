@@ -18,3 +18,7 @@
 - Use port 4000 on localhost for requests
 - App implemented so that you don't need use symbol $ in endpoints before {userId}
 - PUT - request should content one ore more required fields and hobbies (if exist) should be array in other case error 400 will be emitted
+
+## Cross-Check App
+
+- For checking errors on the server side that occur during the processing of requests send incorrect JSON body in POST or PUT requests. For example { username": "Маша" }, there is not first double quote on username key
