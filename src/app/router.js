@@ -1,4 +1,3 @@
-import { database } from "../database/database.js";
 import { STATUS_CODES, request } from 'http';
 import { validate as uuidValidate } from 'uuid';
 
