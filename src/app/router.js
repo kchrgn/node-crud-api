@@ -1,5 +1,5 @@
 import { database } from "../database/database.js";
-import { STATUS_CODES } from 'http';
+import { STATUS_CODES, request } from 'http';
 import { validate as uuidValidate } from 'uuid';
 
 const responseWithError = (res, errorCode) => {
@@ -7,21 +7,54 @@ const responseWithError = (res, errorCode) => {
   res.end(JSON.stringify(STATUS_CODES[errorCode]));
 }
 
-export const router = (req, res) => {
+const requestToDB = async (payload) => {
+  const options = {
+    port: process.env.HTTP_PORT - 1,
+    host: '127.0.0.1',
+    path: '/api/db',
+    method: 'POST',
+  }
+
+  let promise = new Promise((resolve, reject) =>{
+      const req = request(options, (res) => {
+      if (res.statusCode !== 200) {
+        res.resume();
+        reject(new Error);
+      }
+  
+      let data = [];
+      res.on('data', (chunk) => data.push(chunk));
+      res.on('close', () => {
+        try {
+          resolve(JSON.parse(Buffer.concat(data).toString()));
+        } catch (error) {
+          reject(new Error);
+        }
+      })
+    })
+  
+    req.write(JSON.stringify(payload));
+    req.end();
+    req.on('error', (err) => reject(new Error));
+  })
+
+  return promise;
+}
+
+export const router = async (req, res) => {
   try {
     req.on('error', (err) => {
       responseWithError(res, 500);
     })
-
     
     res.setHeader('Content-Type', 'application/json');
 
     if (req.method === 'GET') {
       if (req.url === '/api/users') {
-        const data = JSON.stringify(database.getAllUsers());
+        const data = await requestToDB({action: 'getAllUsers'});
         const responseCode = 200; 
         res.writeHead(responseCode);
-        res.end(data);
+        res.end(JSON.stringify(data));
         return;
       }
 
@@ -33,7 +66,8 @@ export const router = (req, res) => {
           return;
         }
         
-        const data = JSON.stringify(database.getUserByID(uuidFromUrl));
+        const DBResponse = await requestToDB({action: 'getUserByID', uuid: uuidFromUrl});
+        const data = JSON.stringify(DBResponse);
 
         if (!data) {
           responseWithError(res, 404);
@@ -52,7 +86,7 @@ export const router = (req, res) => {
     if (req.method === 'POST' && req.url === '/api/users') {
       let body = [];
       req.on('data', (chunk) => body.push(chunk));
-      req.on('end', () => {
+      req.on('end', async () => {
         try {
           body = Buffer.concat(body).toString();
           if (!body) {
@@ -69,7 +103,8 @@ export const router = (req, res) => {
 
           const responseCode = 201;
           res.writeHead(responseCode);
-          res.end(JSON.stringify(database.createUser(user)));
+          const DBResponse = await requestToDB({action: 'createUser', user: user});
+          res.end(JSON.stringify(DBResponse));
         } catch (error) {
           responseWithError(res, 500);
         }  
@@ -88,7 +123,7 @@ export const router = (req, res) => {
 
       let body = [];
       req.on('data', (chunk) => body.push(chunk));
-      req.on('end', () => {
+      req.on('end', async () => {
         try {
           body = Buffer.concat(body).toString();
           if (!body) {
@@ -102,15 +137,15 @@ export const router = (req, res) => {
             return;
           };
 
-          const result = database.updateUser(uuidFromUrl, user);
-          if (!result) {
+          const DBResponse = await requestToDB({action: 'updateUser', uuid: uuidFromUrl, user: user});
+          if (!DBResponse) {
             responseWithError(res, 404);
             return;
           }
 
           const responseCode = 200;
           res.writeHead(responseCode);
-          res.end(JSON.stringify(result));
+          res.end(JSON.stringify(DBResponse));
         } catch (err) {
           responseWithError(res, 500);
         }  
@@ -126,9 +161,9 @@ export const router = (req, res) => {
         return;
       }
       
-      const result = JSON.stringify(database.deleteUser(uuidFromUrl));
+      const DBResponse = await requestToDB({action: 'deleteUser', uuid: uuidFromUrl});
 
-      if (!result) {
+      if (!DBResponse) {
         responseWithError(res, 404);
         return;
       }

@@ -53,7 +53,7 @@ class Database {
     if (indexOfUser >= 0) {
       this._records.splice(indexOfUser, 1);
     }
-    return (indexOfUser === -1) ? undefined : indexOfUser;
+    return (indexOfUser === -1) ? false : true;
   }
 }
 
