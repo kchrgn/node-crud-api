@@ -29,5 +29,5 @@
 
 ## Note fore Cross-Check App
 
-- For checking errors on the server side that occur during the processing of requests send incorrect JSON body in POST or PUT requests. For example { username": "Маша" }, there is not first double quote on username key
+- For checking errors on the server side that occur during the processing of requests send incorrect JSON body in POST or PUT requests. For example { username": "Маша" }, there is not first double quote on username key.
 - PUT - request should content one ore more required fields and hobbies (if exist) should be array, in other case error 400 will be emitted
