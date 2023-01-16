@@ -12,6 +12,10 @@
 
 - Start app by command "npm run start:dev" or "npm run start:multi"
 
+## Create bundle
+
+- For creating bundle use command "npm run start:prod"
+
 ## Runnig Tests
 
 - For running test use "npm run test" command
@@ -23,7 +27,7 @@
 - Use port 4000 on localhost for requests, also you can use 4001..4004 ports if app was started by command "npm run start:multi"
 - App implemented so that you don't need use symbol $ in endpoints before {userId}
 
-## Cross-Check App
+## Note fore Cross-Check App
 
 - For checking errors on the server side that occur during the processing of requests send incorrect JSON body in POST or PUT requests. For example { username": "Маша" }, there is not first double quote on username key
 - PUT - request should content one ore more required fields and hobbies (if exist) should be array, in other case error 400 will be emitted
