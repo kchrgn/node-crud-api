@@ -1,4 +1,4 @@
-import { v5 as uuidv5 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 class Database {
   constructor () {
@@ -15,7 +15,7 @@ class Database {
   }
   
   createUser(user) {
-    const uuid = uuidv5('', uuidv5.URL);
+    const uuid = uuidv4();
     this._records.push({ id: uuid, ...user });
     return this._records[this._records.length - 1];
   }
