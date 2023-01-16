@@ -2,26 +2,7 @@ import { v5 as uuidv5 } from 'uuid';
 
 class Database {
   constructor () {
-    this._records = [
-      {
-        id: 'c106a26a-21bb-5538-8bf2-57095d1976c1',
-        username: 'Вася',
-        age: '46',
-        hobbies: [
-          'sport',
-          'books',
-        ],
-      },
-      {
-        id: 'c106a26a-21bb-5538-8bf2-57095d1976c2',
-        username: 'Петя',
-        age: '23',
-        hobbies: [
-          'sport',
-          'books',
-        ],
-      },
-    ]
+    this._records = [];
   }
 
   getAllUsers() {
@@ -29,7 +10,8 @@ class Database {
   } 
 
   getUserByID(id) {
-    return this._records.find((record) => record.id === id);
+    const result = this._records.find((record) => record.id === id);
+    return result ? result : false;
   }
   
   createUser(user) {
@@ -44,8 +26,9 @@ class Database {
       if (data.username) user.username = data.username;
       if (data.age) user.age = data.age;
       if (data.hobbies) user.hobbies = [...data.hobbies];
+      return user;
     };
-    return user;
+    return false
   }
 
   deleteUser(id) {

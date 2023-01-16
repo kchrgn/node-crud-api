@@ -20,7 +20,6 @@ const requestToDB = async (payload) => {
         res.resume();
         reject(new Error);
       }
-  
       let data = [];
       res.on('data', (chunk) => data.push(chunk));
       res.on('close', () => {
@@ -64,14 +63,14 @@ export const router = async (req, res) => {
           responseWithError(res, 400);
           return;
         }
-        
+  
         const DBResponse = await requestToDB({action: 'getUserByID', uuid: uuidFromUrl});
-        const data = JSON.stringify(DBResponse);
-
-        if (!data) {
+        
+        if (!DBResponse) {
           responseWithError(res, 404);
           return;
         }
+        const data = JSON.stringify(DBResponse);
 
         const responseCode = 200;
         res.writeHead(responseCode);
@@ -94,7 +93,6 @@ export const router = async (req, res) => {
           }
 
           let user = JSON.parse(body);
-        
           if (!user.username || !user.age || !user.hobbies || !Array.isArray(user.hobbies)) {
             responseWithError(res, 400);
             return;

@@ -18,7 +18,7 @@ export default class App {
     switch (process.argv[2]) {
       case 'multi':
         if (cluster.isPrimary) {
-          const DBProcess = fork(new URL('../database/db_process.js', import.meta.url));
+          const DBProcess = fork(new URL('../database/db_process.js', import.meta.url), [process.env.HTTP_PORT]);
           for (let i = 1; i <= cpus().length; i++) {
             cluster.fork({CLUSTER_PORT: Number(process.env.HTTP_PORT) + i, CLUSTER_INDEX: i});            
           }
@@ -35,7 +35,7 @@ export default class App {
         break;
     
       default:
-        const DBProcess = fork(new URL('../database/db_process.js', import.meta.url));
+        const DBProcess = fork(new URL('../database/db_process.js', import.meta.url), [process.env.HTTP_PORT]);
         const server = createServer(router);
         server.listen(process.env.HTTP_PORT, () => {
           console.log(`Server has been starter on port ${process.env.HTTP_PORT}`);

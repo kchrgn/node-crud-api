@@ -34,7 +34,7 @@ const DBRequestHandler = (req, res) => {
 
 const DBProcess = () => {
   const server = createServer(DBRequestHandler);
-  const port = process.env.HTTP_PORT - 1;
+  const port = process.argv[2] - 1;
   server.listen(port, () => {
     console.log(`Database has been started on port ${port}`);
   })
